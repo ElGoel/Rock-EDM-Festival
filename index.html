@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock & EDM Festival</title>
+    <link rel="stylesheet" href="build/css/app.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="contenedor contenido-header">
+            <h1>Rock & EDM Festival</h1>
+
+            <nav class="navegacion-principal">
+                <a href="">Line Up</a>
+                <a href="">Galeria</a>
+                <a href="">Boletos</a>
+            </nav>
+        </div>
+
+    </header>
+
+    <div class="video">
+        <div class="overlay">
+            <div class="contenedor contenido-video">
+                <h2>Rock & EDM Festival <span>Julio 2021, San Cristobal, Venezuela</span></h2>
+            </div>
+        </div>
+        <video controls autoplay muted loop>
+            <source src="video/concierto.mp4" type="video/mp4">
+            <source src="video/concierto.ogg" type="video/ogg">
+            <source src="video/concierto.webm" type="video/webm">
+        </video>
+        <!-- es muy necesario esta sintaxis para colocar 3 formatos mas usados de videos -->
+        <!-- ya que no todos los navegadores soportan todos los formatos -->
+    </div>
+
+    <div class="sobre-festival contenedor">
+        <div class="imagen">
+            <img src="build/img/imagen_vocalista.jpg" alt="vocalista">
+        </div>
+
+        <div class="contenido-festival">
+            <h2>Rock & EDM Festival</h2>
+            <p class="fecha">Julio 2021, San Cristobal, Venezuela</p>
+            <p class="texto">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Soluta dolor beatae esse minus laudantium accusantiumeos non veritatis?
+            Amet nemo ipsa maiores sunt recusandae voluptatibus tempora dolorem doloremque hic
+            corrupti  dolor beatae esse minus laudantium accusantiumeos non veritatis?
+            Amet nemo ipsa </p>
+        </div>
+    </div>
+
+    <section class="lineup">
+        <h3>Line Up</h3>
+
+        <p class="dia">Viernes 21 </p>
+
+        <div class="escenarios-contenedor contenedor">
+
+            <div class="escenario rock bg-amarillo">
+                <p class="nombre-escenario">Escenario Rock</p>
+
+                <ul class="calendario">
+                    <li>24:00 | <span>Metallica</span></li>
+                    <li>22:00 | <span>Pearl Jam</span></li>
+                    <li>20:00 | <span>Radiohead</span></li>
+                    <li>19:00 | <span>1975</span></li>
+                    <li>18:00 | <span>Muse</span></li>
+                    <li>17:00 | <span>Panic! At the disco</span></li>
+                </ul>
+
+            </div>
+
+            <div class="escenario edm bg-verde">
+                <p class="nombre-escenario">Escenario EDM</p>
+
+                <ul class="calendario">
+                    <li>24:00 | <span>The Whitest Boy Alive</span></li>
+                    <li>22:00 | <span>The Strokers</span></li>
+                    <li>20:00 | <span>Foster the People</span></li>
+                    <li>19:00 | <span>The Smith</span></li>
+                    <li>18:00 | <span>The Apache Relay</span></li>
+                    <li>17:00 | <span>Bon Iver</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="dia">Sábado 22</p>
+
+        <div class="escenarios-contenedor contenedor">
+
+            <div class="escenario rock bg-verde">
+                <p class="nombre-escenario">Escenario Rock</p>
+
+                <ul class="calendario">
+                    <li>24:00 | <span>Arcade Fire</span></li>
+                    <li>22:00 | <span>R.E.M</span></li>
+                    <li>20:00 | <span>Placebo</span></li>
+                    <li>19:00 | <span>Interpol</span></li>
+                    <li>18:00 | <span>Oasis</span></li>
+                    <li>17:00 | <span>Red Hot Chilli Peppers</span></li>
+                </ul>
+
+            </div>
+
+            <div class="escenario edm bg-amarillo">
+                <p class="nombre-escenario">Escenario EDM</p>
+
+                <ul class="calendario">
+                    <li>24:00 | <span>Foo Fighters</span></li>
+                    <li>22:00 | <span>Queen of the Stone Age</span></li>
+                    <li>20:00 | <span>Kings of leon</span></li>
+                    <li>19:00 | <span>Twenty One Pilots</span></li>
+                    <li>18:00 | <span>The Verve</span></li>
+                    <li>17:00 | <span>The White Stripes</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="galeria contenedor">
+        <h3>Galería</h3>
+
+        <ul class="galeria-imagenes">
+
+        </ul>
+    </section>
+
+    <script src="build/js/bundle.js"></script>
+
+</body>
+</html>
