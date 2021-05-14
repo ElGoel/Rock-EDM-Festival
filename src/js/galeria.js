@@ -31,15 +31,11 @@ function mostrarImagen(e) {
     const imagen = document.createElement('IMG');
     imagen.src = `build/img/grande/${id}.webp`;
 
-    // console.log(imagen); <- ejemplo
+    // console.log(imagen); //<- ejemplo
     const overlay = document.createElement('DIV');
     overlay.appendChild(imagen);
     overlay.classList.add('overlay');
 
-//     // Cuando se da click, cerrar la imagen
-    overlay.onclick = function() {
-        overlay.remove();
-    }
 //     // Boton para cerrar la imagen
     const cerrarImagen = document.createElement('P');
     cerrarImagen.textContent = 'X';
@@ -54,4 +50,16 @@ function mostrarImagen(e) {
 //     // Mostrar en el HTML
     const body = document.querySelector('body');
     body.appendChild(overlay);
+    body.classList.add('fijar-body');
+
+//     // Cuando se da click en cualquier lado, cerrar la imagen
+    overlay.onclick = function() {
+        overlay.remove();
+        body.classList.remove('fijar-body');
+    }
+//     // Cuando se preciona el boton, se cierra la imagen
+    cerrarImagen.onclick = function() {
+        overlay.remove();
+        body.classList.remove('fijar-body');
+    }
 }

@@ -5,6 +5,16 @@ const notify = require('gulp-notify');
 const webp = require('gulp-webp');
 const concat = require('gulp-concat');
 
+// Utilidades CSS
+const autoprefixer = require('autoprefixer');
+const postcss = require('gulp-postcss');
+const cssnano = require('cssnano');
+const sourcemap = require('gulp-sourcemaps');
+
+// Utilidades JS
+const terser = require('gulp-terser-js');
+const rename = require('gulp-rename');
+
 // Funcion que compila SASS
 
 const paths = {
@@ -13,25 +23,22 @@ const paths = {
     js: 'src/js/**/*.js'
 }
 
-function css(  ) {
+function css() {
     return src(paths.scss)
-        .pipe( sass({
-            outputStyle: 'expanded'
-        }))
-        .pipe( dest('./build/css') )
-}
-
-function minificarcss() {
-    return src(paths.scss)
-        .pipe( sass({
-            outputStyle: 'compressed'
-        }))
+        .pipe( sourcemap.init() )
+        .pipe( sass())
+        .pipe( postcss([ autoprefixer(), cssnano() ]))
+        .pipe( sourcemap.write('.') )
         .pipe( dest('./build/css') )
 }
 
 function javascript() {
     return src(paths.js)
+        .pipe( sourcemap.init())
         .pipe( concat('bundle.js'))
+        .pipe( terser() )
+        .pipe( sourcemap.write('.'))
+        .pipe( rename( { suffix: '.min' }))
         .pipe( dest('./build/js'))
 }
 
@@ -55,7 +62,6 @@ function watchArchivos() {
 }// el simbolo * llama a todos los archivos con una sola extención
 // de la carpeta actual, **/* recorrera todos los archivos de todas las carpetas
 exports.css = css;
-exports.minificarcss = minificarcss;
 exports.imagenes = imagenes;
 exports.watchArchivos = watchArchivos;
 

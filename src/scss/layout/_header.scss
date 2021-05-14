@@ -18,6 +18,12 @@
             margin-bottom: 0;
         }
     }
+
+    &.fijo {
+        position: fixed;
+        width: 100%; // se necesita el width para que el postition fixed tome todo el espacio disponible
+        box-shadow: 0 .3rem .4rem #444; // este codigo se utiliza para crear sombrados con 3 valores
+    }
 }
 
 .navegacion-principal {
