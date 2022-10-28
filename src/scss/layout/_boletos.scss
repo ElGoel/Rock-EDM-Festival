@@ -1,62 +1,66 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
 .boletos {
-    padding: $separacion 0;
+    padding: 5rem 0;
     h3 {
         text-align: center;
-        color: $blanco;
+        color: v.$blanco;
+        margin-bottom: 2rem;
     }
 
     .contenedor-boletos {
-        margin-top: $separacion / 2;
-        @include grid(2, $separacion);
-    }
 
-    .plan {
-        p {
-            color: $blanco;
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 2rem;
+        @include m.tablet {
+            @include m.grid(2, 5rem);
         }
     }
 }
 
 .pase {
-    width:100%;
-    thead {
-        background-color: $rosa;
-        border-spacing: 0;
-        th {
-            padding: $separacion / 4;
-            color: $blanco;
-            text-transform: uppercase;
-            font-weight: $delgada;
-            font-size: 2rem;
+    color: black;
+
+
+    .nombre-pase {
+        text-align: center;
+        font-size: 2.8rem;
+        color: v.$blanco;
+    }
+    &-header,
+    &-footer  {
+        padding: .5rem;
+        p {
+            text-align: center;
+            color: v.$blanco;
+            margin: 0;
         }
     }
-    tbody {
-        background-color: $blanco;
 
-        td {
-            padding: $separacion / 4;
-            border-bottom: 1px, solid #e1e1e1;
+    &-header {
+        background-color: v.$rosa;
+        p {
+            text-transform: uppercase;
+            font-size: 1.6rem;
         }
+    }
+    &-body {
+        background-color: v.$blanco;
 
-        tr {
-            &:last-of-type {
-                td {
-                    border:none;
-                }
+        ul {
+            @include m.resetear-lista;
+            li, 
+            :nth-child(odd) {
+                background-color: v.$blanco;
+                padding: 1rem;
+                border-bottom: 1px solid #e1e1e1;
             }
         }
     }
-    tfoot {
-        background-color: $morado;
-
-        td {
-            padding: $separacion / 4;
-            text-align: center;
-            font-size: 3rem;
-            color: $blanco;
+    &-footer {
+        background-color: v.$morado;
+        p {
+            font-size: 2.4rem;
+            font-weight: 700;
         }
     }
 }

@@ -1,90 +1,89 @@
-const { series, src, dest, watch, parallel } = require('gulp');
-const sass = require('gulp-sass');
-const imagemin = require('gulp-imagemin');
-const notify = require('gulp-notify');
-const webp = require('gulp-webp');
-const concat = require('gulp-concat');
+const { src, dest, watch, parallel } = require('gulp');
 
-// Utilidades CSS
+// CSS
+const sass = require('gulp-sass')(require('sass'));
+const plumber = require('gulp-plumber');
 const autoprefixer = require('autoprefixer');
-const postcss = require('gulp-postcss');
 const cssnano = require('cssnano');
-const sourcemap = require('gulp-sourcemaps');
+const postcss = require('gulp-postcss');
+const sourcemaps = require('gulp-sourcemaps');
 
-// Utilidades JS
+// Imagenes
+const cache = require('gulp-cache');
+const imagemin = require('gulp-imagemin');
+const webp = require('gulp-webp');
+const avif = require('gulp-avif');
+
+// Javascript
 const terser = require('gulp-terser-js');
-const rename = require('gulp-rename');
 
-// Funcion que compila SASS
-
-const paths = {
-    imagenes: 'src/img/**/*',
-    scss: 'src/scss/**/*.scss',
-    js: 'src/js/**/*.js'
+function css( done ) {
+    src('src/scss/**/*.scss') // Identificar el archivo .SCSS a compilar
+        .pipe(sourcemaps.init())
+        .pipe( plumber())
+        .pipe( sass() ) // Compilarlo
+        .pipe( postcss([ autoprefixer(), cssnano() ]) )
+        .pipe(sourcemaps.write('.'))
+        .pipe( dest('build/css') ) // Almacenarla en el disco duro
+    done();
 }
 
-function css() {
-    return src(paths.scss)
-        .pipe( sourcemap.init() )
-        .pipe( sass())
-        .pipe( postcss([ autoprefixer(), cssnano() ]))
-        .pipe( sourcemap.write('.') )
-        .pipe( dest('./build/css') )
+function imagenes(done) {
+    const opciones = {
+        optimizationLevel: 3
+    }
+    src('src/img/**/*.{png,jpg}')
+        .pipe( cache( imagemin(opciones) ) )
+        .pipe( dest('build/img') )
+    done();
 }
 
-function javascript() {
-    return src(paths.js)
-        .pipe( sourcemap.init())
-        .pipe( concat('bundle.js'))
+function versionWebp( done ) {
+    const opciones = {
+        quality: 50
+    };
+    src('src/img/**/*.{png,jpg}')
+        .pipe( webp(opciones) )
+        .pipe( dest('build/img') )
+    done();
+}
+
+function versionAvif( done ) {
+    const opciones = {
+        quality: 50
+    };
+    src('src/img/**/*.{png,jpg}')
+        .pipe( avif(opciones) )
+        .pipe( dest('build/img') )
+    done();
+}
+
+function javascript( done ) {
+    src('src/js/**/*.js')
+        .pipe(sourcemaps.init())
         .pipe( terser() )
-        .pipe( sourcemap.write('.'))
-        .pipe( rename( { suffix: '.min' }))
-        .pipe( dest('./build/js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(dest('build/js'));
+
+    done();
 }
 
-function imagenes() {
-    return src(paths.imagenes)
-        .pipe( imagemin() )
-        .pipe( dest('./build/img') )
-        .pipe( notify({ message: 'Imagenes Minificadas'}));
+function dev( done ) {
+    watch('src/scss/**/*.scss', css);
+    watch('src/js/**/*.js', javascript);
+    done();
 }
 
-function versionWebp() {
-    return src(paths.imagenes)
-        .pipe( webp() )
-        .pipe( dest('./build/img'))
-        .pipe( notify({message: 'Versión webP lista'}));
+function tarea (done) {
+    console.log('Desde la primera tarea');
+    done();
 }
+ 
+exports.tarea = tarea;
 
-function watchArchivos() {
-    watch( paths.scss, css );
-    watch(paths.js, javascript);
-}// el simbolo * llama a todos los archivos con una sola extención
-// de la carpeta actual, **/* recorrera todos los archivos de todas las carpetas
 exports.css = css;
+exports.js = javascript;
 exports.imagenes = imagenes;
-exports.watchArchivos = watchArchivos;
-
-exports.default = series( css, javascript, imagenes, versionWebp, watchArchivos );
-// function css( done ) {
-//     console.log('compilando... SASS');
-
-//     done();
-// }
-
-// function javascript( done ) {
-//     console.log('compilando... JavaScript');
-
-//     done();
-// }
-
-// function minificarHTNL( done ) {
-//     console.log('Minificando...')
-
-//     done();
-// }
-
-// exports.css = css;
-// exports.javascript = javascript;
-// exports.default = parallel( css, javascript, minificarHTNL );
-// // series: permite ejecutar varias funciones en un solo exports en orden de izquierda a derecha
+exports.versionWebp = versionWebp;
+exports.versionAvif = versionAvif;
+exports.dev = parallel( imagenes, versionWebp, versionAvif, javascript, dev) ;

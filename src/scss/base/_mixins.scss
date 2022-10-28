@@ -1,28 +1,23 @@
-// @mixin nuevoMixin {
-//     font-size: 3rem;
-//     color: $morado;
-//     text-transform: uppercase;
-// }
-
-/** un mixin crea propiedades aparte que puede inportarse al codigo */
-// funcionan como las funciones en JS y se pueden reutilizar
-// se usan parametros y variables que se pueden cambiar
+@use 'variables' as v;
 
 @mixin telefono {
-    @media (min-width: $telefono) {
+    @media (min-width: v.$telefono) {
         @content;
     }
 }
-// @content toma el contenido dentro del bloque y lo ejecuta con el @media-query
 
 @mixin tablet {
-    @media (min-width: $tablet) {
+    @media (min-width: v.$tablet) {
         @content;
     }
 }
-
 @mixin desktop {
-    @media (min-width: $desktop) {
+    @media (min-width: v.$desktop) {
+        @content;
+    }
+}
+@mixin desktopXL {
+    @media (min-width: v.$desktopXL) {
         @content;
     }
 }
@@ -31,4 +26,10 @@
     display: grid;
     grid-template-columns: repeat($columnas, 1fr);
     gap: $espaciado;
+}
+
+@mixin resetear-lista{
+    margin: 0;
+    padding:0;
+    list-style: none;
 }
